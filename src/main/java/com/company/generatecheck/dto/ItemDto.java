@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ItemDto {
 
-    private Short qty;
+    private Integer qty;
     private ProductDto product;
     private Integer total;
 }

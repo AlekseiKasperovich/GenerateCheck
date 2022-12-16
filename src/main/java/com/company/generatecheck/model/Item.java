@@ -19,14 +19,16 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
-    private Short qty;
+    private Integer qty;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Product product;
 
+    private Double wholesaleDiscount;
+
     @Column(nullable = false)
-    private Integer total;
+    private Double total;
 
     @Override
     public boolean equals(Object o) {

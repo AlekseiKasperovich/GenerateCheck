@@ -5,11 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,13 +27,17 @@ public class Check {
     private LocalDateTime printed;
 
     @Column(nullable = false)
-    private Integer taxablePrice;
+    private Double taxablePrice;
 
     @Column(nullable = false)
     private Integer tax;
 
+    private Double wholesaleDiscount;
+
+    private Double promotionalDiscount;
+
     @Column(nullable = false)
-    private Integer totalPrice;
+    private Double totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -42,4 +46,16 @@ public class Check {
     @OneToMany
     private Set<Item> items = new HashSet<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Check check = (Check) o;
+        return id.equals(check.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -2,16 +2,17 @@ package com.company.generatecheck.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class OrderDto {
 
+    @NotNull
     private Long productId;
-    private Short qty;
+
+    @NotNull
+    private Integer qty;
 
     @Override
     public boolean equals(Object o) {

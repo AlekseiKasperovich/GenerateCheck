@@ -1,10 +1,11 @@
 package com.company.generatecheck.controller;
 
+import com.company.generatecheck.builder.CheckBuilder;
 import com.company.generatecheck.dto.CheckDto;
 import com.company.generatecheck.dto.OrderDto;
-import com.company.generatecheck.service.CheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Set;
 
@@ -13,11 +14,11 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CheckController {
 
-    private final CheckService checkService;
+    private final CheckBuilder checkBuilder;
 
     @PostMapping
     public CheckDto createCheck(@RequestBody Set<OrderDto> products, @RequestParam(required = false) Long cardId) {
-        return checkService.createCheck(products, cardId);
+        return checkBuilder.buildCheck(products, cardId);
     }
 
 }

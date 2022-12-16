@@ -1,0 +1,34 @@
+spring:
+  liquibase:
+    enabled: false
+  jpa:
+    generate-ddl: 'true'
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database: postgresql
+    show-sql: 'true'
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:54320/generate_check_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+server:
+  error:
+    include-stacktrace: always
+    include-exception: 'true'
+    include-message: always
+  port: 8080
+logging:
+  level:
+    liquibase: INFO
+    org:
+      springframework: INFO
+app:
+  wholesale:
+    discount: 0.1
+
+  tax: 0.17
+
+  cashier:
+    number: 0001
