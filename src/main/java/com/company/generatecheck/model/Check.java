@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "checks")
 public class Check {
 
@@ -30,7 +31,7 @@ public class Check {
     private Double taxablePrice;
 
     @Column(nullable = false)
-    private Integer tax;
+    private Double tax;
 
     private Double wholesaleDiscount;
 
@@ -44,6 +45,7 @@ public class Check {
     private DiscountCard discountCard;
 
     @OneToMany
+    @Builder.Default
     private Set<Item> items = new HashSet<>();
 
     @Override

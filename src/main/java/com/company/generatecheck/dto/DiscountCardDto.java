@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ProductDto {
+public class DiscountCardDto {
 
-    private String description;
-    private Double price;
+    private Double discount;
 }

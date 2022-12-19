@@ -31,4 +31,4 @@ app:
   tax: 0.17
 
   cashier:
-    number: 0001
+    number: "#1"

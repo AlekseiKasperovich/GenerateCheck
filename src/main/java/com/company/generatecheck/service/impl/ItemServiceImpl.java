@@ -28,7 +28,12 @@ public class ItemServiceImpl implements ItemService {
         for (Map.Entry<Product, Integer> entry : foundProducts.entrySet()) {
             Product product = entry.getKey();
             Integer qty = entry.getValue();
-            Item item = Item.builder().product(product).qty(qty).total(product.getPrice() * qty).wholesaleDiscount(ZERO).build();
+            Item item = Item.builder()
+                    .product(product)
+                    .qty(qty)
+                    .total(product.getPrice() * qty)
+                    .wholesaleDiscount(ZERO)
+                    .build();
             if (qty > 5) {
                 Double total = item.getTotal();
                 Double discount = total * wholesaleDiscountService.getWholesaleDiscount();

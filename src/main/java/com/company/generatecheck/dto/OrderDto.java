@@ -1,6 +1,6 @@
 package com.company.generatecheck.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;

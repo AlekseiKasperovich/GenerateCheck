@@ -8,4 +8,5 @@ import java.util.Set;
 public interface CheckBuilder {
 
     CheckDto buildCheck(Set<OrderDto> products, Long cardId);
-}
+
+  }

@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -22,20 +21,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Map<Product, Integer> findProductsById(Set<OrderDto> products) {
-        List<Long> ids = products.stream().map(OrderDto::getProductId).collect(Collectors.toList());
-        List<Integer> amount = products.stream().map(OrderDto::getQty).collect(Collectors.toList());
-        System.out.println(ids);
-        System.out.println(amount);
-        List<Product> foundProducts = productRepository.findAllById(ids);
-        if (foundProducts.size() != ids.size()) {
-            throw new ProductNotFoundException("These products are not found: " + checkNotFoundProducts(foundProducts, ids));
+        Map<Long, Integer> map = products.stream().collect(Collectors.toMap(OrderDto::getProductId, OrderDto::getQty));
+        Set<Long> keys = map.keySet();
+        List<Product> foundProducts = productRepository.findAllById(keys);
+        if (foundProducts.size() != keys.size()) {
+            throw new ProductNotFoundException("These products are not found: "
+                    + checkNotFoundProducts(foundProducts, keys));
         }
-        System.out.println(Arrays.asList(foundProducts));
-        return IntStream.range(0, foundProducts.size()).boxed()
-                .collect(Collectors.toMap(foundProducts::get, amount::get));
+        Map<Product, Integer> result = new HashMap<>();
+        Product product;
+        for (int i = 0; i < foundProducts.size(); i++) {
+            product = foundProducts.get(i);
+            result.put(product, map.get(product.getId()));
+        }
+        return result;
     }
 
-    private List<Long> checkNotFoundProducts(List<Product> foundProducts, List<Long> ids) {
+    private Set<Long> checkNotFoundProducts(List<Product> foundProducts, Set<Long> ids) {
         List<Long> productIds = foundProducts.stream().map(Product::getId).collect(Collectors.toList());
         ids.removeAll(productIds);
         return ids;
