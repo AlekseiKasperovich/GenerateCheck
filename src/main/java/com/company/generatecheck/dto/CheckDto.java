@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -17,7 +18,9 @@ public class CheckDto {
     private Set<ItemDto> items;
     private Double wholesaleDiscount;
     private Double taxablePrice;
-    private Integer tax;
+    private Double tax;
+    @Column(nullable = false)
+    private Double priceWithTax;
     private DiscountCardDto discountCard;
     private Double promotionalDiscount;
     private Double totalPrice;

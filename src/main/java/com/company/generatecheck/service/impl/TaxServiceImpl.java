@@ -14,4 +14,9 @@ public class TaxServiceImpl implements TaxService {
     public Double getTax() {
         return tax;
     }
+
+    @Override
+    public Double getPriceWithTax(Double taxablePrice) {
+        return taxablePrice * getTax() + taxablePrice;
+    }
 }

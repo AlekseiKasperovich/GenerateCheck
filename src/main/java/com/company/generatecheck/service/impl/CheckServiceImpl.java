@@ -31,6 +31,8 @@ public class CheckServiceImpl implements CheckService {
     private final CashierService cashierService;
     private final TaxService taxService;
     private final CheckMapper checkMapper;
+    private final PriceService priceService;
+    private final WholesaleDiscountService wholesaleDiscountService;
 
     @Override
     public CheckDto createCheck(Set<OrderDto> products, Long cardId) {
@@ -40,17 +42,24 @@ public class CheckServiceImpl implements CheckService {
         if (cardId != null) {
             discountCard = discountCardService.findById(cardId);
         }
+        Double taxablePrice = priceService.getTaxablePrice(items);
+        Double priceWithTax = taxService.getPriceWithTax(taxablePrice);
         Check check = Check.builder()
                 .cashier(cashierService.getCashierNumber())
                 .printed(LocalDateTime.now())
-                .taxablePrice(2.0)
+                .taxablePrice(taxablePrice)
                 .tax(taxService.getTax())
-                .wholesaleDiscount(1.0)
-                .promotionalDiscount(1.0)
-                .totalPrice(100.0)
-                .discountCard(discountCard)
+                .priceWithTax(priceWithTax)
+                .wholesaleDiscount(wholesaleDiscountService.getTotalDiscount(items))
                 .items(items)
+                .totalPrice(priceWithTax)
                 .build();
+        if (discountCard != null) {
+            Double promotionalDiscount = priceService.getPromotionalDiscount(check.getPriceWithTax(), discountCard);
+            check.setDiscountCard(discountCard);
+            check.setPromotionalDiscount(promotionalDiscount);
+            check.setTotalPrice(priceService.getTotalPrice(check.getPriceWithTax(), promotionalDiscount));
+        }
         return checkMapper.convert(checkRepository.save(check));
     }
 

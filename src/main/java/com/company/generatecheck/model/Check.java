@@ -33,6 +33,9 @@ public class Check {
     @Column(nullable = false)
     private Double tax;
 
+    @Column(nullable = false)
+    private Double priceWithTax;
+
     private Double wholesaleDiscount;
 
     private Double promotionalDiscount;
