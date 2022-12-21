@@ -1,8 +1,10 @@
 package com.company.generatecheck.service;
 
+import java.math.BigDecimal;
+
 public interface TaxService {
 
-   Double getTax();
+    BigDecimal getTax();
 
-    Double getPriceWithTax(Double taxablePrice);
+    BigDecimal getPriceWithTax(BigDecimal taxablePrice);
 }

@@ -12,7 +12,7 @@ services:
       - postgres
   postgres:
     image: postgres:latest
-    container_name: generate_check_db
+    container_name: db_postgres
     ports:
       - "54320:5432"
     env_file:

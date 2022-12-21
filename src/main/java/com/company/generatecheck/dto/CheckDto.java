@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -16,12 +17,12 @@ public class CheckDto {
     @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime printed;
     private Set<ItemDto> items;
-    private Double wholesaleDiscount;
-    private Double taxablePrice;
-    private Double tax;
+    private BigDecimal wholesaleDiscount;
+    private BigDecimal taxablePrice;
+    private BigDecimal tax;
     @Column(nullable = false)
-    private Double priceWithTax;
+    private BigDecimal priceWithTax;
     private DiscountCardDto discountCard;
-    private Double promotionalDiscount;
-    private Double totalPrice;
+    private BigDecimal promotionalDiscount;
+    private BigDecimal totalPrice;
 }

@@ -2,11 +2,12 @@ package com.company.generatecheck.service;
 
 import com.company.generatecheck.model.Item;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 public interface WholesaleDiscountService {
 
-    Double getWholesaleDiscount();
+    BigDecimal getWholesaleDiscount();
 
-    Double getTotalDiscount(Set<Item> items);
+    BigDecimal getTotalDiscount(Set<Item> items);
 }

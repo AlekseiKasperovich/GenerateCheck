@@ -3,6 +3,7 @@ package com.company.generatecheck.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -27,7 +28,7 @@ public class DiscountCard {
     private String lastName;
 
     @Column(nullable = false)
-    private Double discount;
+    private BigDecimal discount;
 
     @Override
     public boolean equals(Object o) {

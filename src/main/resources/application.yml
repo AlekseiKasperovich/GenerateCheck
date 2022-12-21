@@ -4,7 +4,7 @@ spring:
   jpa:
     generate-ddl: 'true'
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     database: postgresql
     show-sql: 'true'
@@ -13,6 +13,12 @@ spring:
     url: ${DB_URL:jdbc:postgresql://localhost:54320/generate_check_db}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
+  mvc:
+    pathmatch:
+        matching-strategy: ant_path_matcher
+  sql:
+    init:
+        mode: always
 server:
   error:
     include-stacktrace: always
@@ -27,6 +33,7 @@ logging:
 app:
   wholesale:
     discount: 0.1
+    count: 5
 
   tax: 0.17
 

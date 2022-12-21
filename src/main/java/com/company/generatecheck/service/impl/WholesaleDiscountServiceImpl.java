@@ -5,25 +5,27 @@ import com.company.generatecheck.service.WholesaleDiscountService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Set;
 
 @Service
 public class WholesaleDiscountServiceImpl implements WholesaleDiscountService {
 
     @Value("${app.wholesale.discount}")
-    private Double wholesaleDiscount;
+    private BigDecimal wholesaleDiscount;
 
     @Override
-    public Double getWholesaleDiscount() {
+    public BigDecimal getWholesaleDiscount() {
         return wholesaleDiscount;
     }
 
     @Override
-    public Double getTotalDiscount(Set<Item> items) {
-        Double totalDiscount = 0.0;
+    public BigDecimal getTotalDiscount(Set<Item> items) {
+        BigDecimal totalDiscount = BigDecimal.valueOf(0);
         for (Item item : items) {
-            totalDiscount += item.getWholesaleDiscount();
+            totalDiscount = totalDiscount.add(item.getWholesaleDiscount());
         }
-        return totalDiscount;
+        return totalDiscount.setScale(2, RoundingMode.CEILING);
     }
 }

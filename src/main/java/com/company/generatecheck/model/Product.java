@@ -3,6 +3,7 @@ package com.company.generatecheck.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -22,7 +23,7 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @Override
     public boolean equals(Object o) {

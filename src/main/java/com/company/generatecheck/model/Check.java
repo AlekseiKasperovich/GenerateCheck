@@ -3,6 +3,7 @@ package com.company.generatecheck.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -28,20 +29,20 @@ public class Check {
     private LocalDateTime printed;
 
     @Column(nullable = false)
-    private Double taxablePrice;
+    private BigDecimal taxablePrice;
 
     @Column(nullable = false)
-    private Double tax;
+    private BigDecimal tax;
 
     @Column(nullable = false)
-    private Double priceWithTax;
+    private BigDecimal priceWithTax;
 
-    private Double wholesaleDiscount;
+    private BigDecimal wholesaleDiscount;
 
-    private Double promotionalDiscount;
+    private BigDecimal promotionalDiscount;
 
     @Column(nullable = false)
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

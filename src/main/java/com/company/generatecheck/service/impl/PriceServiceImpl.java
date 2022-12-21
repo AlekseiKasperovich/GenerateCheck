@@ -6,6 +6,9 @@ import com.company.generatecheck.service.PriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Set;
 
 
@@ -14,21 +17,21 @@ import java.util.Set;
 public class PriceServiceImpl implements PriceService {
 
     @Override
-    public Double getTaxablePrice(Set<Item> items) {
-        Double taxablePrice = 0.0;
+    public BigDecimal getTaxablePrice(Set<Item> items) {
+        BigDecimal taxablePrice = BigDecimal.valueOf(0);
         for (Item item : items) {
-            taxablePrice += item.getTotal();
+           taxablePrice= taxablePrice.add(item.getTotal());
         }
         return taxablePrice;
     }
 
     @Override
-    public Double getPromotionalDiscount(Double taxablePrice, DiscountCard discountCard) {
-        return taxablePrice*discountCard.getDiscount();
+    public BigDecimal getPromotionalDiscount(BigDecimal taxablePrice, DiscountCard discountCard) {
+        return taxablePrice.multiply(discountCard.getDiscount()).setScale(2, RoundingMode.CEILING);
     }
 
     @Override
-    public Double getTotalPrice(Double priceWithTax, Double promotionalDiscount) {
-        return priceWithTax-promotionalDiscount;
+    public BigDecimal getTotalPrice(BigDecimal priceWithTax, BigDecimal promotionalDiscount) {
+        return priceWithTax.subtract(promotionalDiscount).setScale(2, RoundingMode.CEILING);
     }
 }

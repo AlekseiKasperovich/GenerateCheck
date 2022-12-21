@@ -3,6 +3,7 @@ package com.company.generatecheck.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -25,10 +26,10 @@ public class Item {
     @JoinColumn(nullable = false)
     private Product product;
 
-    private Double wholesaleDiscount;
+    private BigDecimal wholesaleDiscount;
 
     @Column(nullable = false)
-    private Double total;
+    private BigDecimal total;
 
     @Override
     public boolean equals(Object o) {

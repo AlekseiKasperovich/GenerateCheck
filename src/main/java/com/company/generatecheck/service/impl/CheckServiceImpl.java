@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
@@ -38,12 +39,9 @@ public class CheckServiceImpl implements CheckService {
     public CheckDto createCheck(Set<OrderDto> products, Long cardId) {
         Map<Product, Integer> foundProducts = productService.findProductsById(products);
         Set<Item> items = itemService.createItems(foundProducts);
-        DiscountCard discountCard = null;
-        if (cardId != null) {
-            discountCard = discountCardService.findById(cardId);
-        }
-        Double taxablePrice = priceService.getTaxablePrice(items);
-        Double priceWithTax = taxService.getPriceWithTax(taxablePrice);
+
+        BigDecimal taxablePrice = priceService.getTaxablePrice(items);
+        BigDecimal priceWithTax = taxService.getPriceWithTax(taxablePrice);
         Check check = Check.builder()
                 .cashier(cashierService.getCashierNumber())
                 .printed(LocalDateTime.now())
@@ -54,8 +52,12 @@ public class CheckServiceImpl implements CheckService {
                 .items(items)
                 .totalPrice(priceWithTax)
                 .build();
+        DiscountCard discountCard = null;
+        if (cardId != null) {
+            discountCard = discountCardService.findById(cardId);
+        }
         if (discountCard != null) {
-            Double promotionalDiscount = priceService.getPromotionalDiscount(check.getPriceWithTax(), discountCard);
+            BigDecimal promotionalDiscount = priceService.getPromotionalDiscount(check.getPriceWithTax(), discountCard);
             check.setDiscountCard(discountCard);
             check.setPromotionalDiscount(promotionalDiscount);
             check.setTotalPrice(priceService.getTotalPrice(check.getPriceWithTax(), promotionalDiscount));
